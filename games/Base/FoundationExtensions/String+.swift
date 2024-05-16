@@ -8,10 +8,6 @@
 import Foundation
 
 extension String {
-   var isLowercased: Bool {
-       return self == self.lowercased()
-   }
-
    var isUppercased: Bool {
        return self == self.uppercased()
    }
