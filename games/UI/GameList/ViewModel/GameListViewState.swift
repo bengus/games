@@ -9,17 +9,23 @@ import Foundation
 
 struct GameListViewState:  Equatable {
     let sectionItems: [DateSectionItem]
-    let isLoading: Bool
+    let loadingState: LoadingState
     
     static func empty() -> Self {
         return GameListViewState(
             sectionItems: [],
-            isLoading: false
+            loadingState: .idle
         )
     }
 }
 
 extension GameListViewState {
+    enum LoadingState {
+        case idle
+        case initialLoading
+        case refreshControlRefreshing
+    }
+    
     struct DateSectionItem: Equatable {
         let dateText: String
         let gameItems: [GameItemType]

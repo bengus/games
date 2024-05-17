@@ -39,8 +39,7 @@ final class AppContainer: AppContainerProtocol {
     func gameListScreenFactory() -> UIViewController {
         let viewModel = GameListViewModel(
             initialState: .empty(),
-            gamesProvider: self.gamesProvider,
-            calendar: self.calendar
+            gamesProvider: self.gamesProvider
         )
         return GameListViewController(
             viewModel: viewModel,

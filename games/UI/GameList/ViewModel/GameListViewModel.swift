@@ -16,20 +16,15 @@ class GameListViewModel:
 >
 {
     private let gamesProvider: GamesProvider
-    private let calendar: Calendar
-    // Boolean flag maybe not the best solution, but robust for this case in Demo
-    private var isUpdatingInProgress = false
+    private var loadingState: GameListViewState.LoadingState = .idle
     
     
     // MARK: - Init
     init(
         initialState: GameListViewState,
-        gamesProvider: GamesProvider,
-        calendar: Calendar
+        gamesProvider: GamesProvider
     ) {
         self.gamesProvider = gamesProvider
-        self.calendar = calendar
-        
         super.init(initialState: initialState)
     }
     
@@ -45,17 +40,21 @@ class GameListViewModel:
     override func onViewAction(_ action: ViewAction) {
         switch action {
         case .pullToRefresh:
-            update()
+            update(byPullToRefresh: true)
         }
     }
     
-    private func update() {
-        isUpdatingInProgress = true
+    private func update(byPullToRefresh: Bool = false) {
+        if byPullToRefresh {
+            self.loadingState = .refreshControlRefreshing
+        } else {
+            self.loadingState = .initialLoading
+        }
         reload()
         gamesProvider.updateGames { [weak self] result in
             guard let self else { return }
             
-            self.isUpdatingInProgress = false
+            self.loadingState = .idle
             self.reload()
             if case .failure(let error) = result {
                 publishEffect(.showError(localizedError: error.localizedDescription))
@@ -90,9 +89,10 @@ class GameListViewModel:
             currentCompetition = nil
             gameItems = []
         }
+        
         publishState(GameListViewState(
             sectionItems: sectionItems,
-            isLoading: isUpdatingInProgress
+            loadingState: self.loadingState
         ))
     }
 }

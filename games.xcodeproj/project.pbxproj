@@ -47,6 +47,7 @@
 		D3192A2A2BF5C56200B7F196 /* Calendar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3192A292BF5C56200B7F196 /* Calendar+.swift */; };
 		D3192A2E2BF5FDB400B7F196 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3192A2D2BF5FDB400B7F196 /* Design.swift */; };
 		D3192A332BF62B6E00B7F196 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3192A322BF62B6E00B7F196 /* LoadingView.swift */; };
+		D3192A362BF72DD200B7F196 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3192A352BF72DD200B7F196 /* UITableView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		D3192A292BF5C56200B7F196 /* Calendar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+.swift"; sourceTree = "<group>"; };
 		D3192A2D2BF5FDB400B7F196 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		D3192A322BF62B6E00B7F196 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		D3192A352BF72DD200B7F196 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 		D31929D42BF4F97600B7F196 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D3192A342BF72DC300B7F196 /* UIKitExtensions */,
 				D3192A192BF52B2500B7F196 /* FoundationExtensions */,
 				D31929ED2BF5055C00B7F196 /* UIKitBase */,
 				D31929DB2BF4FAE600B7F196 /* Mvvm */,
@@ -291,6 +294,14 @@
 			path = Design;
 			sourceTree = "<group>";
 		};
+		D3192A342BF72DC300B7F196 /* UIKitExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				D3192A352BF72DD200B7F196 /* UITableView+.swift */,
+			);
+			path = UIKitExtensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -388,6 +399,7 @@
 				D3192A0D2BF51CA900B7F196 /* CompetitionDto.swift in Sources */,
 				D3192A1B2BF52B3F00B7F196 /* AnyCodingKey.swift in Sources */,
 				D3192A332BF62B6E00B7F196 /* LoadingView.swift in Sources */,
+				D3192A362BF72DD200B7F196 /* UITableView+.swift in Sources */,
 				D31929FE2BF50C7C00B7F196 /* GameTableViewCell.swift in Sources */,
 				D31929C52BF4F82700B7F196 /* GameListViewController.swift in Sources */,
 				D31929FA2BF50BE700B7F196 /* DateSectionHeaderView.swift in Sources */,

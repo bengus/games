@@ -33,6 +33,8 @@ final class GameListView: MvvmUIKitView
         return tableView
     }()
     
+    private lazy var refreshControl: UIRefreshControl = UIRefreshControl()
+    
     private lazy var loadingView = LoadingView(
         indicatorColor: Design.Colors.loadingIndicatorGray,
         backdropColor: Design.Colors.loadingBackdropColor
@@ -53,6 +55,8 @@ final class GameListView: MvvmUIKitView
         tableView.register(DateSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: DateSectionHeaderView.reuseIdentifier)
         tableView.register(CompetitionTableViewCell.self, forCellReuseIdentifier: CompetitionTableViewCell.reuseIdentifier)
         tableView.register(GameTableViewCell.self, forCellReuseIdentifier: GameTableViewCell.reuseIdentifier)
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(onRefreshControlRefresh(_:)), for: UIControl.Event.valueChanged)
     }
     
     
@@ -84,6 +88,13 @@ final class GameListView: MvvmUIKitView
         loadingView.pin.all()
         
         return frame.size
+    }
+    
+    
+    // MARK: - Control's Actions
+    @objc
+    private func onRefreshControlRefresh(_ sender: AnyObject) {
+        viewModel.sendViewAction(.pullToRefresh)
     }
     
     
@@ -124,7 +135,17 @@ final class GameListView: MvvmUIKitView
     override func onState(_ state: GameListViewState) {
         super.onState(state)
         
-        loadingView.setLoading(state.isLoading)
+        switch state.loadingState {
+        case .idle:
+            loadingView.setLoading(false)
+            tableView.stopRefreshControl()
+        case .initialLoading:
+            loadingView.setLoading(true)
+            tableView.stopRefreshControl()
+        case .refreshControlRefreshing:
+            loadingView.setLoading(false)
+            tableView.startRefreshControl(animated: true)
+        }
         // Don't worry about full reload because of Demo. Moreover Cells are very lightful.
         tableView.reloadData()
         setNeedsLayout()
