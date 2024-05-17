@@ -17,6 +17,7 @@ class GameListViewModel:
 {
     private let gamesProvider: GamesProvider
     private var loadingState: GameListViewState.LoadingState = .idle
+    private var sectionItems = [GameListViewState.DateSectionItem]()
     
     
     // MARK: - Init
@@ -55,14 +56,17 @@ class GameListViewModel:
             guard let self else { return }
             
             self.loadingState = .idle
-            self.reload()
-            if case .failure(let error) = result {
+            switch result {
+            case .success:
+                self.rebuildSectionItems()
+            case .failure(let error):
                 publishEffect(.showError(localizedError: error.localizedDescription))
             }
+            self.reload()
         }
     }
     
-    private func reload() {
+    private func rebuildSectionItems() {
         var sectionItems = [GameListViewState.DateSectionItem]()
         for (date, games) in gamesProvider.getGamesByDates() {
             var currentCompetition: Competition?
@@ -89,9 +93,12 @@ class GameListViewModel:
             currentCompetition = nil
             gameItems = []
         }
-        
+        self.sectionItems = sectionItems
+    }
+    
+    private func reload() {
         publishState(GameListViewState(
-            sectionItems: sectionItems,
+            sectionItems: self.sectionItems,
             loadingState: self.loadingState
         ))
     }
